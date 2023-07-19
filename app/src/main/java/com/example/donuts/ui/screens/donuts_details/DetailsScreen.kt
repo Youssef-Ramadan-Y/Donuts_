@@ -1,5 +1,10 @@
 package com.example.donuts.ui.screens.donuts_details
 
+import androidx.compose.animation.core.RepeatMode
+import androidx.compose.animation.core.animateFloat
+import androidx.compose.animation.core.infiniteRepeatable
+import androidx.compose.animation.core.rememberInfiniteTransition
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -19,6 +24,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
@@ -56,6 +62,8 @@ fun DetailsContent(
     onDecreaseQuantity: () -> Unit,
     onIncreaseQuantity: () -> Unit,
 ) {
+    val transition = rememberInfiniteTransition()
+
 
     Box(
         Modifier
@@ -73,9 +81,26 @@ fun DetailsContent(
                 tint = Primary,
             )
         }
+        val scale by transition.animateFloat(
+            initialValue = 5f,
+            targetValue = 6f,
+            animationSpec = infiniteRepeatable(
+                animation = tween(4000),
+                repeatMode = RepeatMode.Reverse
+            )
+        )
+        val rotate by transition.animateFloat(
+            initialValue = -30f,
+            targetValue = 30f,
+            animationSpec = infiniteRepeatable(
+                animation = tween(2000),
+                repeatMode = RepeatMode.Reverse
+            )
+        )
         Image(
             modifier = Modifier
-                .scale(6f)
+                .rotate(rotate)
+                .scale(scale)
                 .padding(top = 60.dp)
                 .align(Alignment.TopCenter),
             painter = painterResource(id = state.image),
