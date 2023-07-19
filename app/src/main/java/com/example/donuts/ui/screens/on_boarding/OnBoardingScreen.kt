@@ -48,8 +48,8 @@ fun OnBoardingContent(
     ) {
         val transition = rememberInfiniteTransition()
         val offsetY by transition.animateFloat(
-            initialValue = -10f,
-            targetValue = 10f,
+            initialValue = -20f,
+            targetValue = 20f,
             animationSpec = infiniteRepeatable(
                 animation = tween(5000),
                 repeatMode = RepeatMode.Reverse
@@ -58,7 +58,7 @@ fun OnBoardingContent(
 
         val offsetX by transition.animateFloat(
             initialValue = -20f,
-            targetValue = 10f,
+            targetValue = 20f,
             animationSpec = infiniteRepeatable(
                 animation = tween(5000),
                 repeatMode = RepeatMode.Reverse
