@@ -1,4 +1,4 @@
-package com.example.donuts.ui.composables
+package com.example.donuts.ui.screens.composables
 
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height

@@ -1,6 +1,7 @@
 package com.example.donuts.ui.screens.home.composables
 
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Icon
@@ -19,19 +20,21 @@ import com.example.donuts.ui.theme.White
 @Preview
 @Composable
 fun PreviewCircleIcon() {
-    CircleIcon()
+    CircleIcon(onClickFavorite = {})
 }
 
 
 @Composable
 fun CircleIcon(
     modifier: Modifier = Modifier,
+    onClickFavorite: () -> Unit,
 ) {
     Box(contentAlignment = Alignment.Center,modifier = modifier.padding(15.dp)) {
         Circle(tint = White, circleSize = 45f)
         Icon(
             modifier = Modifier
-                .align(Alignment.TopStart),
+                .align(Alignment.TopStart)
+                .clickable {onClickFavorite },
             painter = painterResource(id = R.drawable.baseline_favorite_border_24),
             contentDescription = "Favorite Icon",
             tint = MaterialTheme.colorScheme.primary,

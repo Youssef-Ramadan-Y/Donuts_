@@ -1,5 +1,10 @@
 package com.example.donuts.ui.screens.home.composables
 
+import androidx.compose.animation.core.RepeatMode
+import androidx.compose.animation.core.animateFloat
+import androidx.compose.animation.core.infiniteRepeatable
+import androidx.compose.animation.core.rememberInfiniteTransition
+import androidx.compose.animation.core.tween
 import androidx.constraintlayout.compose.ConstraintLayout
 
 import androidx.compose.foundation.Image
@@ -21,29 +26,35 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.scale
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.donuts.R
+import com.example.donuts.ui.screens.home.TodayOffers
 import com.example.donuts.ui.theme.Type
 import com.example.donuts.ui.theme.LightBlue
 
 
 @Composable
 fun TodayOfferItem(
-    title: String,
-    description: String,
-    onTodayOfferClicked: () -> Unit
+    state: TodayOffers,
+    tintColor: Color,
+    onTodayOfferClicked: () -> Unit,
+    onClickFavorite: () -> Unit
 ) {
+    val transition = rememberInfiniteTransition()
 
     Box(
         modifier = Modifier
             .height(325.dp)
-            .width(193.dp)
+            .width(250.dp)
             .clickable { onTodayOfferClicked() },
     ) {
         ConstraintLayout(modifier = Modifier.fillMaxSize()) {
@@ -57,18 +68,20 @@ fun TodayOfferItem(
                         start.linkTo(parent.start)
                     }
                     .fillMaxHeight()
-                    .width(150.dp)
+                    .width(193.dp)
                     .background(LightBlue, shape = RoundedCornerShape(16.dp)),
             ) {
 
-                CircleIcon()
+                CircleIcon(
+                    onClickFavorite = onClickFavorite
+                )
                 Column(
                     modifier = Modifier
                         .align(Alignment.BottomCenter)
                         .padding(vertical = 8.dp, horizontal = 8.dp)
                 ) {
 
-                    ItemText(title = title, description = description)
+                    ItemText(title = state.title, description = state.description)
                     ItemPrice(
                         modifier = Modifier.padding(top = 4.dp),
                         afterDiscount = 16,
@@ -78,15 +91,24 @@ fun TodayOfferItem(
             }
 
             // donut
+            val scale by transition.animateFloat(
+                initialValue = 1.5f,
+                targetValue = 1.2f,
+                animationSpec = infiniteRepeatable(
+                    animation = tween(2000),
+                    repeatMode = RepeatMode.Reverse
+                )
+            )
             Image(
                 modifier = Modifier
-                    .size(150.dp)
+                    .size(160.dp)
+                    .scale(scale)
                     .constrainAs(donut) {
                         top.linkTo(parent.top, 50.dp)
                         end.linkTo(parent.end)
                     },
                 contentScale = ContentScale.Crop ,
-                painter = painterResource(id = R.drawable.donut2),
+                painter = painterResource(id = state.image),
                 contentDescription = null
             )
 
@@ -142,10 +164,11 @@ private fun ItemPrice(modifier: Modifier = Modifier, afterDiscount: Int, beforeD
 
 @Preview
 @Composable
-fun any() {
+private fun any() {
     TodayOfferItem(
-        title = "Strawberry Wheel",
-        description = "These Baked Strawberry Donuts are filled with fresh strawberries.." ,
+       state = TodayOffers(),
+        tintColor = LightBlue,
+        {},
         {}
     )
 }

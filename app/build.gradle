@@ -94,4 +94,9 @@ dependencies {
     kapt("com.google.dagger:hilt-android-compiler:2.44")
 
 
+    def accompanist_version = "0.28.0"
+    implementation "com.google.accompanist:accompanist-flowlayout:$accompanist_version"
+    implementation "com.google.accompanist:accompanist-systemuicontroller:$accompanist_version"
+
+
 }
