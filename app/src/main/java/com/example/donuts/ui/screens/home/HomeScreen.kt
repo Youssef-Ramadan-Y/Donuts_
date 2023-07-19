@@ -28,7 +28,6 @@ import com.example.donuts.ui.screens.home.composables.HeaderText
 import com.example.donuts.ui.screens.home.composables.SearchIcon
 import com.example.donuts.ui.screens.home.composables.TodayOfferItem
 import com.example.donuts.ui.theme.LightBlue
-import com.example.donuts.ui.theme.Secondary
 import com.example.donuts.ui.theme.Type
 import com.example.donuts.ui.theme.pink
 
@@ -79,7 +78,7 @@ private fun HomeHeader(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 16.dp),
+            .padding(start = 16.dp, end = 16.dp, bottom = 16.dp, top = 64.dp),
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
         HeaderText(
